@@ -1,5 +1,5 @@
 # Google Apps Script Project: bmXml
-This repo (bmXml) was automatically updated on 4/16/2023, 4:57:59?PM by GasGit
+This repo (bmXml) was automatically updated on 4/17/2023, 1:38:12?PM by GasGit
 
 For more information on gasgit, see the [desktop liberation site](https://ramblings.mcpher.com/drive-sdk-and-github/migrategasgit/ "desktop liberation")
 
@@ -20,6 +20,8 @@ Exports| server_js
 XmlWrapper| server_js
 Gml| server_js
 HtmlEncoder| server_js
+Html| server_js
+AnyMl| server_js
 ### Directly referenced libraries
 *library*|*identifier*|*key*|*version*|*dev mode*|*source*|
 --- | --- | --- | --- | --- | --- 
