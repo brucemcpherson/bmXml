@@ -23,7 +23,7 @@ var Exports = {
 
 
   /**
-   * @class XmlWrapper
+   * @implements XmlWrapper
    * @return {XmlWrapper} 
    */
   newXmlWrapper(...args) {
@@ -39,11 +39,35 @@ var Exports = {
   },
 
   /**
+   * @class AnyMl
+   * @return {AnyMl} 
+   */
+  get AnyMl () {
+    return AnyMl
+  },
+
+  /**
+   * @implements AnyMl
+   * @return {Proxy} 
+   */
+  newAnyMl(...args) {
+    return this.guard(new this.AnyMl(...args))
+  },
+
+  /**
    * Gml Extension namespace example
    * @return {Proxy} 
    */
   get Gml() {
     return this.guard(Gml)
+  },
+
+  /**
+   * Html Extension namespace example
+   * @return {Proxy} 
+   */
+  get Html() {
+    return this.guard(Html)
   },
 
   /**
