@@ -22,7 +22,8 @@ class XmlWrapper {
 
   /**
    * @constructor
-   * @param {XmlItem} root the root of the xml tree
+   * @param {object} p the paramsc
+   * @param {XmlItem} p.root the root of the xml tree
    * @return {XmlWrapper}
    */
   constructor({ root }) {
@@ -56,6 +57,20 @@ class XmlWrapper {
     return ob[k]
   }
 
+  get selfCloseBans() {
+    return ['script', 'link', 'img']
+  }
+
+  fixSelfClose(tag) {
+    // If you expect XML/XHTML software to access your page, keep the closing slash (/), because it is required in XML and XHTML.
+    // ref- https://www.w3schools.com/html/html5_syntax.asp
+    // however some tags like script just don't work with a self close 
+    return this.selfCloseBans.find(f => tag.toLowerCase() ===f ) ? ">" : "/>"
+  }
+
+  /**
+   * some tags are not allowed to be self closing
+   */
   /**
     * wrap an element
     * @param {object} p params
@@ -78,7 +93,7 @@ class XmlWrapper {
     if (children && !u.isArray(children)) throw `children for ${tag} must be an array`
     const kids = children && children.length
 
-    if (!tag) throw 'missing tag property in item'
+    if (!tag) throw `missing tag property in item ${JSON.stringify(item)}`
     const spaces = " ".repeat(tab)
 
     // add the attrs to the tag
@@ -86,7 +101,7 @@ class XmlWrapper {
       attrs
         ? Reflect.ownKeys(attrs).map(k => ` ${k}="${this.checkAttr(attrs, k)}"`).join("")
         : ''
-    ) + `${kids ? '>' : '/>'}`
+    ) + `${kids ? '>' : this.fixSelfClose(tag)}`
 
 
     // self close if there are no children
