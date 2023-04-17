@@ -5,33 +5,28 @@
 const Gml = (() => {
 
 
-  /**
-   * @return {XmlWrapper}and instance of xmlwrapper
-   */
-  const getRenderer = () => {
-    return Exports.newXmlWrapper({
-      root: {
-        tag: 'graphml',
-        attrs: {
-          xmlns: "http://graphml.graphdrawing.org/xmlns"
-        }
-      }
-    })
+  const self = {}
 
+  self.root = {
+    tag: 'graphml',
+    attrs: {
+      xmlns: "http://graphml.graphdrawing.org/xmlns"
+    }
+  }
+
+  self.setRoot = (newRoot) => {
+    root = newRoot
+    return self
   }
 
   /**
    * this is the parent item for a complete gml rendering
-   * @param {XmlItem[]} children the content
-   * @param {number} [indent=2] number of spaces to indent each children content by
+   * @param {object} p params
+   * @param {XmlItem[]} p.children the content
+   * @param {number} [p.indent=2] number of spaces to indent each children content by
    * @return {string} the rendered string
    */
-  const render = ({ children, indent } = {}) => {
-    return getRenderer().render({ children, indent })
-  }
+  self.render = ({ children, indent } = {}) => Exports.newAnyMl({ root: self.root }).render({ children, indent })
 
-  return {
-    render,
-    getRenderer
-  }
+  return self
 })()
