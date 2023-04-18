@@ -87,11 +87,14 @@ class XmlWrapper {
   wrap({ item, tab = 0, indent = 2 }) {
     const u = Exports.Utils
     const encoder = Exports.HtmlEncoder.encode
-    const { tag, attrs, children } = item
+    const { tag, attrs, children: chill } = item
+
+    // relax the need for children to be an array
+    const children = u.arrify (chill)
 
     if (attrs && (!u.isObject(attrs) || u.isArray(attrs))) throw `attrs for ${tag} must be a non array object`
-    if (children && !u.isArray(children)) throw `children for ${tag} must be an array`
-    const kids = children && children.length
+    if (!u.isArray(children)) throw `children for ${tag} must be an array`
+    const kids = children.length
 
     if (!tag) throw `missing tag property in item ${JSON.stringify(item)}`
     const spaces = " ".repeat(tab)
@@ -111,7 +114,7 @@ class XmlWrapper {
       : ''
 
     // absorb all the children
-    const childContent = (children || []).map(child => u.isObject(child)
+    const childContent = children.map(child => u.isObject(child)
       ? this.wrap({ item: child, tab: tab + indent, indent })
       : encoder(child)
     ).join('')
