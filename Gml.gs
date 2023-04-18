@@ -15,7 +15,7 @@ const Gml = (() => {
   }
 
   self.setRoot = (newRoot) => {
-    root = newRoot
+    self.root = newRoot
     return self
   }
 
